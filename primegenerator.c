@@ -3,7 +3,7 @@
 
 int main() {
     // Write C code here
-    int a,b,flag,i,j;
+    int a,b,flag,i,j,isFirst=1;
     printf("Enter the range: ");
     scanf("%d %d",&a,&b);
     printf("Prime numbers in the range (%d,%d) are\n",a,b);
@@ -15,8 +15,13 @@ int main() {
             if(i%j==0)
               flag=1;
         }
-        if(flag==0)
-           printf("%d,",i);
+        if(flag==0){
+           if(!isFirst){
+              printf(", ");
+           }
+           printf("%d",i);
+           is_first = 0;
+        }
     }
     return 0;
 }
