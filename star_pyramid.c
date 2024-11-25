@@ -12,7 +12,8 @@ int main(){
              continue;
           space(n%2==0? (n-i)/2:(n+1-i)/2);
           for(int j=0;j<i;j++)
-             printf("\n");
+             printf("*");
+          printf("\n");
     }
     return 0;
 }
