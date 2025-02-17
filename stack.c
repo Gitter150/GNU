@@ -3,7 +3,6 @@
 * COMPILE THIS PROGRAM USING THE BELOW COMMAND AND RUN AS USUAL
 * gcc stack.c list_without_main.c -o a 
 */
-
 #include <stdio.h>          
 #include "list.h"
 #include <stdlib.h>         
