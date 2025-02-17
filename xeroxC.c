@@ -16,7 +16,7 @@ int main() {
         return 0;
     }
     if(!(file = fopen(buffer, "r"))) {
-        printf("Error! File \"%s\" could not be opened.",buffer);
+        printf("Error! File \"%s\" could not be opened.\n",buffer);
         printf("Provide the subdirectory or absolute path of the file if possible. Try again!\n");
         return 0;
     }
