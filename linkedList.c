@@ -48,7 +48,7 @@ void insertLast(List* lst, int x){
     nextPtr -> next = last;
 }
 
-List* createList() {
+List* new_List() {
     List* lst = (List*)malloc(1 * sizeof(List));
     if (lst) lst -> head = NULL;
     else printf("Memory Allocation for the new List object failed!\n");
@@ -108,8 +108,8 @@ void removeLast(List* lst){
     free(temp);
 }
 
-size_t listLen(List* lst){
-    size_t len = 0;
+int listLen(List* lst){
+    int len = 0;
     Node* current = lst -> head;
     while(current != NULL) {
         len++;
@@ -169,7 +169,7 @@ dataResult dataAtNode(Node* node) {
 }
 
 int main() {
-    List* lst = createList();
+    List* lst = new_List();
     int index = 0;
     for(int i=1;i<=5;i++) insertLast(lst, i);
     printList(lst);
