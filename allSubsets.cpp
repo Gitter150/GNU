@@ -18,6 +18,17 @@ std::vector<std::vector<int>> Subsets(std::vector<int> &arr) {
     return subsets;
 }
 
+std::vector<int> readVec() {
+    std::vector<int> res;
+    std::cout << "Enter the set, key in 'x' when completed.\n";
+    int buffer;
+    do {
+        std::cin >> buffer;
+        res.push_back(buffer);
+    } while (buffer != 0);
+    return res;
+}
+
 void print(std::vector<int> arr) {
     if (arr.size() == 0) return;
     std::cout << "(";
@@ -29,7 +40,7 @@ void print(std::vector<int> arr) {
 }
 
 int main() {
-    std::vector<int> arr = {1,2};
+    std::vector<int> arr = readVec();
     std::vector<std::vector<int>> subsets = Subsets(arr);
     std::cout << "[";
     for(int i = 0; i < subsets.size()-1; i++) {

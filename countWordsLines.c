@@ -39,7 +39,7 @@ int main() {
     
     // Read words using fscanf and count them
     while(fscanf(file, "%s", buffer) == 1) words++;
-
+    
     if(fclose(file) == EOF) {
         printf("Error! File couldn't be closed. Try again.\n");
         return 0;
