@@ -20,7 +20,7 @@ int intSqrt(long long num) {
 long long intPow(int base, int exp) {
     if(exp == 0) return 1;
     if(base <= 1 || exp == 1) return base;
-    long long res = base;
+    long long res = 1;
     for(int i=0; i < exp; i++) res *= base;
     return res;
 }
