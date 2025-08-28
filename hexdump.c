@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#define RED "\033[31m"
+#define RESET "\033[0m"
 #define SIZE_T_MAX 0xFFFFFFFFU
 
 int main(int argc, char *argv[]) {
@@ -13,6 +14,7 @@ int main(int argc, char *argv[]) {
     size_t bytes_read = 0;
     size_t bytes_left_to_read;
     size_t bytes_in_each_line = 16;
+    int spaces[16] = {49, 46, 43, 39, 36, 33, 30, 26, 23, 20, 17, 13, 10, 7, 4, 0};
     long long no_of_bytes;
     // printf("argc = %d, argv = ", argc);
     // for(int i = 0; i < argc; i++) {
@@ -80,19 +82,23 @@ int main(int argc, char *argv[]) {
     while( ((n = fread(buffer, 1, bytes_in_each_line, fp)) != 0) && (i < max_iters) ) { // n is the number of bytes in each line. if 0, loop stops. 
         any_bytes_read = 1;
         printf("%08zX: ", index);
-        
+
         for(int j = 0; j < n; j++) {
+            //if(j >= n) buffer[j] = (unsigned char)32;
+
             printf("%02X ", buffer[j]);
-            if(j == 3 || j == 7 || j == 11) printf(" ");
+            if(j == 3 || j == 7 || j == 11 || j == 15) printf(" ");
         }
 
-        printf(" |");
+        if(n <= 16) for(int i = 0; i < spaces[n-1]; i++) printf(" ");
+
+        printf("|");
 
         for(int j = 0; j < n; j++) {
             if(buffer[j] >= 32 && buffer[j] <= 126) {
                 printf("%c",(char)buffer[j]);
             } else {
-                printf("\033[31m.\033[0m");
+                printf(RED "." RESET);
             }
         }
 
