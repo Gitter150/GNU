@@ -67,18 +67,18 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    int any_bytes_read = 0;
-    size_t i = 0;
     int remainder_bytes = bytes_left_to_read % 16;
-
+    
     if(remainder_bytes == 0) {
         max_iters = (bytes_left_to_read) / 16;
     } else {
         max_iters = (bytes_left_to_read - remainder_bytes) / 16 + 1;
     }
-
+    
     if(bytes_left_to_read < 16) bytes_in_each_line = bytes_left_to_read;
-
+    size_t i = 0;
+    int any_bytes_read = 0;
+    
     while( ((n = fread(buffer, 1, bytes_in_each_line, fp)) != 0) && (i < max_iters) ) { // n is the number of bytes in each line. if 0, loop stops. 
         any_bytes_read = 1;
         printf("%08zX: ", index);
