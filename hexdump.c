@@ -84,10 +84,8 @@ int main(int argc, char *argv[]) {
         printf("%08zX: ", index);
 
         for(int j = 0; j < n; j++) {
-            //if(j >= n) buffer[j] = (unsigned char)32;
-
             printf("%02X ", buffer[j]);
-            if(j == 3 || j == 7 || j == 11 || j == 15) printf(" ");
+            if((j+1) % 4 == 0) printf(" ");
         }
 
         if(n <= 16) for(int i = 0; i < spaces[n-1]; i++) printf(" ");
