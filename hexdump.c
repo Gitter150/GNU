@@ -130,7 +130,7 @@ int main(int argc, char *argv[]) {
                     bytes_in_each_line = (size_t)w;
                 } // -w flag
 
-                if(strcmp(argv[i],"-o") == 0) {
+                if(strcmp(argv[i],"-s") == 0) {
                     s_found  = 1;
                     
                     offset = strtol(argv[i+1], &endptr, 10);
