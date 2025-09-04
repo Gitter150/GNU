@@ -65,7 +65,6 @@ int main(int argc, char *argv[]) {
             printf("Error. Enter an integer value for offset.");
             return 1;
         }
-        
 
         printf("Enter the width (-1 if default of 16): ");
         scanf("%lld",&w);
@@ -74,13 +73,11 @@ int main(int argc, char *argv[]) {
             return 1;
         }
 
-
         printf("Enter 1 if the file size should be indicated, else 0: ");
         if(!scanf("%d",&indicate_size) || indicate_size > 1 || indicate_size < 0) {
             printf("Error: Invalid character. Please enter 0 to ignore or 1 to indicate size");
             return 1;
         }
-
 
         if(w == -1) w = 16;
         bytes_in_each_line = (size_t)w;
