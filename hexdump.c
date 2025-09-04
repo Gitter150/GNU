@@ -144,7 +144,7 @@ int main(int argc, char *argv[]) {
                         printf("Error. The offset cannot be an invalid character. Please try again.");
                         return 1;
                     }
-                } // -o flag
+                } // -s flag
 
                 if(strcmp(argv[i],"-S") == 0) {
                     indicate_size = 1;
