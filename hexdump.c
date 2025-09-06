@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
     int n_found = 0;
     int s_found = 0;
     long long w = 16;
-    long int offset = 0;
+    long offset = 0;
     int reference = SEEK_SET;
     int spaces[16] = {49, 46, 43, 39, 36, 33, 30, 26, 23, 20, 17, 13, 10, 7, 4, 0};
     long long no_of_bytes = SIZE_T_MAX;
@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
     long size = 0;
     int indicate_size = 0;
     int any_bytes_read = 0;
-
+    long group_size = 4;
     // for debug
     // printf("argc = %d, argv = ", argc);
     // for(int i = 0; i < argc; i++) {
@@ -79,10 +79,19 @@ int main(int argc, char *argv[]) {
             return 1;
         }
 
+        
         if(w == -1) w = 16;
         bytes_in_each_line = (size_t)w;
         if(no_of_bytes == -1) no_of_bytes = SIZE_T_MAX;
         bytes_left_to_read = (size_t)no_of_bytes;
+
+        printf("Enter the group size (-1 for default 4): ");
+        if(!scanf("%ld", &group_size) || !group_size || group_size < -1 || group_size > bytes_in_each_line) {
+            printf("Error: Group size needs to be either -1 or a natural number less than the width. Please try again");
+            return 1;
+        } 
+        
+        if(group_size == -1) group_size = 4;
         fp = fopen(filepath, "rb");
     } else {
         if(argc == 2) {
@@ -93,7 +102,7 @@ int main(int argc, char *argv[]) {
             for(int i = 0; i < argc; i++) {
                 if(strcmp(argv[i], "-n") == 0) {
                     n_found = 1;
-                    no_of_bytes = strtoll(argv[i+1], NULL, 10);
+                    no_of_bytes = strtoll(argv[i+1], NULL, 0);
 
                     if(!no_of_bytes) {
                         printf("Number of bytes should not be zero or an invalid string. Please try again");
@@ -111,7 +120,7 @@ int main(int argc, char *argv[]) {
 
                 if(strcmp(argv[i], "-w") == 0) {
                     w_found = 1;
-                    w = strtoll(argv[i+1], NULL, 10);
+                    w = strtoll(argv[i+1], NULL, 0);
 
                     if(!w) {
                         printf("Width should not be zero or an invalid string. Please try again");
@@ -130,7 +139,7 @@ int main(int argc, char *argv[]) {
                 if(strcmp(argv[i],"-s") == 0) {
                     s_found  = 1;
                     
-                    offset = strtol(argv[i+1], &endptr, 10);
+                    offset = strtol(argv[i+1], &endptr, 0);
 
                     if(errno == ERANGE) {
                         printf("Error: The offset cannot be more than %ld or less than %ld. Please try again.", LONG_MAX, LONG_MIN);
@@ -146,6 +155,32 @@ int main(int argc, char *argv[]) {
                 if(strcmp(argv[i],"-S") == 0) {
                     indicate_size = 1;
                 } // -S flag
+
+                if(strcmp(argv[i],"-g") == 0) {
+                    group_size = strtol(argv[i+1], &endptr, 0);
+
+                    if(errno == ERANGE) {
+                        printf("Error: group size exceeds %ld or is less than %ld", LONG_MAX, LONG_MIN);
+                        return 1;
+                    }
+
+                    if(endptr == argv[i+1]) {
+                        printf("Error: Group size -g needs to be -1 or a natural number less than width");
+                        return 1;
+                    }
+
+                    if(!group_size) {
+                        printf("Error: Group size cannot be 0. Please try again");
+                        return 1;
+                    }
+
+                    if(group_size < -1 || group_size > w) {
+                        printf("Error: Group size cannot be less than -1 or more than the width");
+                        return 1;
+                    }
+
+                    if(group_size == -1) group_size = 4;
+                }
             }
             if(!w_found) {
                 w = 16;
@@ -209,7 +244,7 @@ int main(int argc, char *argv[]) {
 
         for(int j = 0; j < n; j++) {
             printf("%02X ", buffer[j]);
-            if((j+1) % 4 == 0) printf(" ");
+            if((j+1) % group_size == 0) printf(" ");
         }
 
         if(w == 16 && n <= 16) for(int i = 0; i < spaces[n-1]; i++) printf(" ");
